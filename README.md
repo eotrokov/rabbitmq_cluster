@@ -1,20 +1,20 @@
-# RabbitMQ cluster with Docker Compose
+# RabbitMQ кластер c Docker-Compose
 
-Creates a 3 node RabbitMQ cluster with a HAProxy acting as a load balancer.
+Создадим 3-х узловый кластер RabbitMQ с HAProxy, действующим в качестве балансировщика нагрузки.
 
-Now run the docker compose file:
+Теперь запустите docker-compose file:
 
 ```sh
 $ docker-compose up -d
 ```
 
-check if the containers are running:
+Проверьте, работают ли контейнеры:
 
 ```sh
 $ docker ps
 ```
 
-Create the cluster by running:
+Создайте кластер, выполнив:
 
 ```sh
 $ docker exec -ti rabbitmq-node-2 bash -c "rabbitmqctl stop_app"
@@ -26,10 +26,10 @@ $ docker exec -ti rabbitmq-node-3 bash -c "rabbitmqctl join_cluster rabbit@rabbi
 $ docker exec -ti rabbitmq-node-3 bash -c "rabbitmqctl start_app"
 ```
 
-Check the cluster status:
+Проверьте состояние кластера:
 
 ```sh
 $ docker exec -ti rabbitmq-node-1 bash -c "rabbitmqctl cluster_status"
 ```
 
-Access HAProxy statistics report at `http://localhost:1936/haproxy?stats` with the credential `haproxy:haproxy`, and the RabbitMQ console at `http://localhost:15672/` with the credential `admin:Admin@123`.
+Доступ к статистическому отчету HAProxy по адресу `http://localhost:1936/haproxy?stats` с учетными данными `haproxy:haproxy`, и консоли RabbitMQ по адресу `http://localhost:15672/` с учетными данными `test:test`.
