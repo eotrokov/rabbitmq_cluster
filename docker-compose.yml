@@ -1,0 +1,58 @@
+version: "3.4"
+
+services:
+  rabbitmq-node-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rabbitmq-node-1
+    hostname: rabbitmq-node-1
+    ports:
+      - "15674:15674"
+      - "15672:15672"
+    networks:
+      - cluster-network
+    volumes:
+      - $PWD/storage/rabbitmq-node-1:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=cluster_cookie
+      - RABBITMQ_DEFAULT_USER=test
+      - RABBITMQ_DEFAULT_PASS=test
+
+  rabbitmq-node-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rabbitmq-node-2
+    hostname: rabbitmq-node-2
+    ports:
+      - "15673:15672"
+    networks:
+      - cluster-network
+    volumes:
+      - $PWD/storage/rabbitmq-node-2:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=cluster_cookie
+      - RABBITMQ_DEFAULT_USER=test
+      - RABBITMQ_DEFAULT_PASS=test
+
+  rabbitmq-node-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rabbitmq-node-3
+    hostname: rabbitmq-node-3
+    ports:
+      - "15674:15672"
+    networks:
+      - cluster-network
+    volumes:
+      - $PWD/storage/rabbitmq-node-3:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=cluster_cookie
+      - RABBITMQ_DEFAULT_USER=test
+      - RABBITMQ_DEFAULT_PASS=test
+
+networks:
+  cluster-network:
+    driver: bridge
