@@ -18,7 +18,12 @@ services:
       - RABBITMQ_ERLANG_COOKIE=cluster_cookie
       - RABBITMQ_DEFAULT_USER=test
       - RABBITMQ_DEFAULT_PASS=test
-
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+        max_attempts: 3
+        window: 120s
   rabbitmq-node-2:
     build:
       context: ./rabbitmq
@@ -35,6 +40,12 @@ services:
       - RABBITMQ_ERLANG_COOKIE=cluster_cookie
       - RABBITMQ_DEFAULT_USER=test
       - RABBITMQ_DEFAULT_PASS=test
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+        max_attempts: 3
+        window: 120s
 
   rabbitmq-node-3:
     build:
@@ -52,6 +63,12 @@ services:
       - RABBITMQ_ERLANG_COOKIE=cluster_cookie
       - RABBITMQ_DEFAULT_USER=test
       - RABBITMQ_DEFAULT_PASS=test
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+        max_attempts: 3
+        window: 120s
 
   haproxy:
     build:
@@ -64,6 +81,12 @@ services:
       - "1936:1936"
     networks:
       - cluster-network
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+        max_attempts: 3
+        window: 120s
 networks:
   cluster-network:
     driver: bridge
